@@ -136,6 +136,7 @@ const AppRoutes = () => {
         <Route path="analytics" element={<></>} />
         <Route path="banners" element={<></>} />
         <Route path="subscriptions" element={<></>} />
+        <Route path="overview" element={<>Overview Dashboard</>} />
       </Route>
     </Routes>
   );
