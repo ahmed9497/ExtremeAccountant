@@ -1,0 +1,35 @@
+.scrollable-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 300px; /* Adjust height as needed */
+    padding: 10px;
+    border: 1px solid #ccc;
+    align-items: center;
+    scroll-behavior: smooth;
+  }
+  
+  .month {
+    flex: 0 0 auto;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s, opacity 0.3s;
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  .month.active {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .month:hover {
+    background-color: #eee;
+  }
+  
+  .scrollable-container::-webkit-scrollbar {
+    display: none; /* Hide the scrollbar */
+  }
+  
