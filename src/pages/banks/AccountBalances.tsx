@@ -10,37 +10,50 @@ import { useNavigate } from "react-router";
 import { axiosInstance } from "@apiClient";
 import dayjs from "dayjs";
 import AddBankAccount from "@components/modals/AddBankAccount";
+import { useSelector } from "react-redux";
+import { RootState } from "@state/store";
 
 
 interface DataType {
   id: number;
-  bank: string;
-  code: string;
-  createdAt: string;
-  balance: string;
+  account_name: string;
+  account_number: string;
+  bank_name: string;
+  opening_balance_date: string;
+  opening_balance: string;
 }
 
 const columns: TableColumnsType<DataType> = [
   {
     title: "Bank",
-    dataIndex: "bank",
+    dataIndex: "bank_name",
     render: (text: string) => <a>{text}</a>,
   },
   {
-    title: "Code",
-    dataIndex: "code",
+    title: "Account Name",
+    dataIndex: "account_name",
     render: (text: string) => <a>{text}</a>,
   },
   {
-    title: "Reconcile Date",
-    dataIndex: "createdAt",
-    render: (text) => <div>{dayjs(text).format('DD/MM/YYYY')}</div>,
+    title: "Account Number",
+    dataIndex: "account_number",
+    render: (text: string) => <a>{text}</a>,
   },
+  // {
+  //   title: "Reconcile Date",
+  //   dataIndex: "createdAt",
+  //   render: (text) => <div>{dayjs(text).format('DD/MM/YYYY')}</div>,
+  // },
   {
-    title: "Balance",
-    dataIndex: "balance",
+    title: "Opening Balance",
+    dataIndex: "opening_balance",
     render: (text) => <div>{text}</div>,
   },
+    {
+      title: "Opening Balance Date",
+      dataIndex: "opening_balance_date",
+      render: (text) => <div>{dayjs(text).format('DD/MM/YYYY')}</div>,
+    },
   
   
 
@@ -73,37 +86,23 @@ const rowSelection = {
 const AccountBalances = () => {
   const navigate = useNavigate();
   // const [data, setData] = useState<DataType[]>([]);
-  const [roles, setRoles] = useState([
-    {
-      id:1,
-      bank:'Askari bank',
-      code:'23432',
-      createdAt:'12/11/2024',
-      balance:'23423'
-    },
-    {
-      id:2,
-      bank:'Habib bank',
-      code:'234322',
-      createdAt:'14/11/2024',
-      balance:'234213'
-    }
-  ]);
+  const [banks, setBanks] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [editData, setEditData] = useState<any>();
+  const {company }: any = useSelector((state: RootState) => state.common);
 
  
   
   useEffect(() => {
-    // getList();
+    getList();
   }, []);
 
   const getList = async () => {
    
     try {
-      const res: any = await axiosInstance.get("/role/roleslist");
-      if (res?.code === 200) {
-        setRoles(res.data);
+      const res: any = await axiosInstance.get(`/companies/${company?.id}/bank-accounts`);
+      if (res?.statusCode === 200) {
+        setBanks(res.data);
       }
     } catch (error: any) {
       console.log("error", error);
@@ -129,7 +128,6 @@ const AccountBalances = () => {
         modalVisible={modalVisible}
         handleCancel={handleCancel}
         submitData={submitData}
-        venueId={23}
         editData={editData}
 
       />
@@ -225,7 +223,7 @@ const AccountBalances = () => {
           ...rowSelection,
         }}
         columns={columns}
-        dataSource={roles}
+        dataSource={banks}
         rowKey={"id"}
         bordered
         size="small"

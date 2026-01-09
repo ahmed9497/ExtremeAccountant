@@ -4,7 +4,7 @@ export type StepProps = {
     handleCancel: () => void;
     submitData: () => void;
     settingCurrencyId?: (id:number) => void;
-    venueId: number ;
+
     currencyId?: number ;
     zones?:any,
     editData?:any

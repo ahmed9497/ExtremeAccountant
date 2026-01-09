@@ -162,7 +162,7 @@ const BankPayments = () => {
         modalVisible={modalVisible}
         handleCancel={handleCancel}
         submitData={submitData}
-        venueId={23}
+
         editData={editData}
 
       />
@@ -171,7 +171,7 @@ const BankPayments = () => {
         modalVisible={whtModalVisible}
         handleCancel={handleWhtCancel}
         submitData={submitData}
-        venueId={23}
+
         editData={editData}
 
       />

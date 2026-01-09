@@ -348,6 +348,7 @@ const AdminLayout = () => {
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
+  const {company }: any = useSelector((state: RootState) => state.common);
 
   const items: MenuProps["items"] = [
     {
@@ -448,8 +449,10 @@ const AdminLayout = () => {
         <Header
           style={{ padding: 0, height: 60, background: colorBgContainer }}
         >
-          <Flex justify="end" gap={10} align="center" className="px-4 ">
-            <div className="text-[14px] text-[#6F7070]">
+          <Flex justify="space-between" gap={10} align="center" className="px-4 ">
+            <div className="uppercase font-semibold text-xl text-green-600">{company?.name}</div>
+            <div className="flex items-center gap-4">
+            <div className="text-[14px] text-[#6F7070] capitalize">
               {user?.user?.name || "Your Name"}
             </div>
             <Avatar
@@ -466,6 +469,7 @@ const AdminLayout = () => {
                 <RiArrowDownSLine size={25} />
               </div>
             </Dropdown>
+            </div>
           </Flex>
         </Header>
         <Content className="p-4">

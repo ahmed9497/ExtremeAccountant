@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userCompanies } from "@globalConstant";
 import { RootState } from "@state/store";
 import { useNavigate } from "react-router";
+import { setCompany } from "@state/common/common";
 type Company = {
   id: number;
   name: string;
@@ -102,6 +103,11 @@ export default function Company() {
         <div className="divide-y">
           {companiesData.map((company) => (
             <button
+                onClick={()=>{
+                    dispatch(setCompany(company));
+                    localStorage.setItem('company',JSON.stringify(company))
+                    navigate('/dashboard')
+                }}
               key={company.id}
               className="w-full flex items-center justify-between py-4 px-2 rounded-lg hover:bg-gray-50 transition"
             >

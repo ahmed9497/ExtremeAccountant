@@ -9,9 +9,11 @@ export const addArticleSchema = yup.object().shape({
     mainImage:yup.mixed<File>().required("Image is Required"), 
     })
 export const addbankAccount = yup.object().shape({
-    bank:yup.string().required('Name is required'),
-    code:yup.string().required('Headline is required'),
-    description:yup.string().required('Description is required')  
+    bank_name:yup.string().required('bank_name is required'),
+    account_name:yup.string().required('Heaaccount_namedline is required'),
+    account_number:yup.string().required('account_number is required'),  
+    opening_balance:yup.string().required('opening_balance is required'),  
+    opening_balance_date:yup.string().required('opening_balance_date is required')  
     })
 export const addCustomer = yup.object().shape({
     businessName:yup.string().required('businessName is required'),
