@@ -16,37 +16,15 @@ import { Navigate, Outlet, useLocation } from "react-router";
 import {
   AnalyticsIcon,
   ArticlesIcon,
-  AttractionsIcon,
-  BannersIcon,
   ContentIcon,
   EventsIcon,
-  FeedIcon,
-  LocationsIcon,
-  OffersIcon,
   OverviewIcon,
   PaymentsIcon,
-  SubscriptionsIcon,
-  UsersIcon,
   VenuesIcon,
 } from "@utils/svgIcons";
 import { Link } from "react-router-dom";
 import { axiosInstance } from "@apiClient";
-import {
-  articlesCategories,
-  attractionCategories,
-  attractionIcons,
-  categories,
-  cities,
-  countries,
-  currency,
-  eventCategories,
-  eventIcons,
-  getArtist,
-  getDays,
-  getMenuIcons,
-  location,
-  menuCategories,
-} from "@globalConstant";
+
 import { setCommon } from "@state/common/common";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@state/store";
@@ -222,32 +200,155 @@ const itemss = [
   //   path: "/subs",
   // },
 ];
-const routes = [
-  "overview",
-  "analytics",
-  "payments",
-  "articles",
-  "content",
-  "venues",
-  "events",
-  "attractions",
-  "offers",
-  "feed",
-  "users",
-  "locations",
-  "banners",
-  "subscriptions",
+
+const menuItems: MenuProps["items"] = [
+  {
+    key: "/dashboard/overview",
+    icon: <OverviewIcon />,
+    label: <Link to="/dashboard/overview">Dashboard</Link>,
+  },
+  {
+    key: "banks",
+    icon: <AnalyticsIcon />,
+    label: "Banks",
+    children: [
+      {
+        key: "/dashboard/banks/bank-accounts",
+        label: (
+          <Link to="/dashboard/banks/bank-accounts">Account Balances</Link>
+        ),
+      },
+      {
+        key: "/dashboard/banks/bank-payments",
+        label: <Link to="/dashboard/banks/bank-payments">Bank Payments</Link>,
+      },
+      {
+        key: "/dashboard/banks/bank-receipts",
+        label: <Link to="/dashboard/banks/bank-receipts">Bank Receipts</Link>,
+      },
+      {
+        key: "/dashboard/banks/bank-transfers",
+        label: <Link to="/dashboard/banks/bank-transfers">Transfers</Link>,
+      },
+      {
+        key: "/dashboard/banks/bank-reconcile",
+        label: <Link to="/dashboard/banks/bank-reconcile">Reconcile</Link>,
+      },
+    ],
+  },
+  {
+    key: "sales",
+    icon: <PaymentsIcon />,
+    label: "Sales",
+    children: [
+      {
+        key: "/dashboard/sales/sales-invoices",
+        label: <Link to="/dashboard/sales/sales-invoices">Invoices</Link>,
+      },
+      {
+        key: "/dashboard/sales/receipts",
+        label: <Link to="/dashboard/sales/receipts">Receipts</Link>,
+      },
+      {
+        key: "/dashboard/sales/pdcr",
+        label: (
+          <Link to="/dashboard/sales/pdcr">Post Dated Cheque Received</Link>
+        ),
+      },
+      {
+        key: "/dashboard/sales/sales-all",
+        label: <Link to="/dashboard/sales/sales-all">Sales All</Link>,
+      },
+      {
+        key: "/dashboard/sales/orders",
+        label: <Link to="/dashboard/sales/orders">Orders</Link>,
+      },
+      {
+        key: "/dashboard/sales/customers",
+        label: <Link to="/dashboard/sales/customers">Customers</Link>,
+      },
+    ],
+  },
+  {
+    key: "purchases",
+    icon: <ArticlesIcon />,
+    label: "Purchases",
+    children: [
+      {
+        key: "/dashboard/purchases/bills",
+        label: <Link to="/dashboard/purchases/bills">Bills</Link>,
+      },
+      {
+        key: "/dashboard/purchases/payments",
+        label: <Link to="/dashboard/purchases/payments">Payments</Link>,
+      },
+      {
+        key: "/dashboard/purchases/pdcr",
+        label: (
+          <Link to="/dashboard/purchases/pdcr">Post Dated Cheque Received</Link>
+        ),
+      },
+      {
+        key: "/dashboard/purchases/all",
+        label: <Link to="/dashboard/purchases/all">Purchases All</Link>,
+      },
+      {
+        key: "/dashboard/purchases/order",
+        label: <Link to="/dashboard/purchases/order">Purchase Order</Link>,
+      },
+      {
+        key: "/dashboard/purchases/suppliers",
+        label: <Link to="/dashboard/purchases/suppliers">Suppliers</Link>,
+      },
+    ],
+  },
+  {
+    key: "inventory",
+    icon: <ContentIcon />,
+    label: "Inventory",
+    children: [
+      {
+        key: "/dashboard/inventory/products",
+        label: <Link to="/dashboard/inventory/products">Products</Link>,
+      },
+      {
+        key: "/dashboard/inventory/stock-adjustment",
+        label: (
+          <Link to="/dashboard/inventory/stock-adjustment">
+            Stock Management
+          </Link>
+        ),
+      },
+    ],
+  },
+  {
+    key: "/dashboard/reports",
+    icon: <VenuesIcon />,
+    label: <Link to="/dashboard/reports">Reports</Link>,
+  },
+  {
+    key: "/dashboard/analytics",
+    icon: <EventsIcon />,
+    label: <Link to="/dashboard/analytics">Analytics</Link>,
+  },
 ];
+const parentKeyMap: Record<string, string> = {
+  banks: "banks",
+  sales: "sales",
+  purchases: "purchases",
+  inventory: "inventory",
+};
 const AdminLayout = () => {
+  const location = useLocation();
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const route = useLocation();
-  const [selectedKeys, setSelectedkeys] = useState(["4"]);
 
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
-  console.log(user);
+
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -258,6 +359,15 @@ const AdminLayout = () => {
       ),
     },
   ];
+  useEffect(() => {
+  const [, , parent] = location.pathname.split("/"); 
+  if (parentKeyMap[parent]) {
+    setOpenKeys([parentKeyMap[parent]]);
+  } else {
+    setOpenKeys([]);
+  }
+}, [location.pathname]);
+
   // useEffect(() => {
   //      const getCommons = () => {
   //     Promise.all([
@@ -302,13 +412,6 @@ const AdminLayout = () => {
   //     getCommons();
   //   }
   // }, []);
-  useEffect(() => {
-    const a = route.pathname;
-    const parts = a.split("/"); // Split the string by '/'
-    const loc = parts[parts.length - 1];
-    const index = routes.findIndex((i: any) => i === loc);
-    // setSelectedkeys(['21']);
-  }, [route]);
 
   const logOut = () => {
     dispatch(setUserLogout("logout"));
@@ -319,12 +422,12 @@ const AdminLayout = () => {
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
+        // onBreakpoint={(broken) => {
+        //   console.log(broken);
+        // }}
+        // onCollapse={(collapsed, type) => {
+        //   console.log(collapsed, type);
+        // }}
         className="pt-6"
         width="226px"
       >
@@ -334,10 +437,11 @@ const AdminLayout = () => {
 
         <Menu
           mode="inline"
-          // defaultSelectedKeys={["6"]}
-          // selectedKeys={selectedKeys}
-          items={itemss}
-          // onClick={(e: any) => console.log(e)}
+          items={menuItems}
+          selectedKeys={[location.pathname]}
+          openKeys={openKeys}
+          defaultOpenKeys={openKeys}
+          onOpenChange={(keys) => setOpenKeys(keys as string[])}
         />
       </Sider>
       <Layout>
@@ -358,9 +462,9 @@ const AdminLayout = () => {
             {/* <RiArrowDownSLine size={25}/> */}
 
             <Dropdown menu={{ items }}>
-              <a onClick={(e) => e.preventDefault()}>
+              <div onClick={(e) => e.preventDefault()}>
                 <RiArrowDownSLine size={25} />
-              </a>
+              </div>
             </Dropdown>
           </Flex>
         </Header>
@@ -379,13 +483,13 @@ const AdminLayout = () => {
       </Layout>
     </Layout>
   );
-  // return user?.user?.tokens?.accessToken ? (
-  // return user?.user?.name ? (
-  //   <Admin />
-  // ) : (
-  //   <Navigate to={"/login"} />
-  // );
-  return <Admin />;
+  return user?.token ? (
+
+    <Admin />
+  ) : (
+    <Navigate to={"/login"} />
+  );
+  // return <Admin />;
 };
 
 export default AdminLayout;

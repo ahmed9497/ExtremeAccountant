@@ -6,13 +6,13 @@ export default {
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/templates/**/*.{js,ts,jsx,tsx}'
 ],
-  theme: {
-    extend: {
-      colors: {
-        'blue': '#23AED5',
-      }
-    },
-  },
+  // theme: {
+  //   extend: {
+  //     colors: {
+  //       // 'blue': '#23AED5',
+  //     }
+  //   },
+  // },
   plugins: [],
 }
 

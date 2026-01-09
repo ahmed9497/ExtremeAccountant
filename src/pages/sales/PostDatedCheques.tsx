@@ -7,7 +7,6 @@ import React, { useContext, useRef, useState } from "react";
 import type { GetRef, InputRef, TableProps } from "antd";
 import { Form, Input, Popconfirm, Table } from "antd";
 import { axiosInstance } from "@apiClient";
-import { addArticles, updateArticles } from "@globalConstant";
 import { StepProps } from "@components/shared/types";
 import { useEffect } from "react";
 

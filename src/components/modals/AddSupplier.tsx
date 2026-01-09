@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 
 
 import { axiosInstance } from "@apiClient";
-import { addArticles, updateArticles } from "@globalConstant";
+
 import { StepProps } from "@components/shared/types";
 import { useEffect, useState } from "react";
 
@@ -65,38 +65,38 @@ const AddSupplier = ({
   const onSubmit = async (data: any) => {
     console.log(data);
 
-    const formData = new FormData();
+    // const formData = new FormData();
 
    
-    data.tags = JSON.stringify(data.tags);
-    for (const key in data) {
-      let val = data[key];
-      formData.append(key, val);
-    }
+    // data.tags = JSON.stringify(data.tags);
+    // for (const key in data) {
+    //   let val = data[key];
+    //   formData.append(key, val);
+    // }
 
-    const url = editData?.id ? `${updateArticles}/${editData.id}` : addArticles;
-    try {
+    // const url = editData?.id ? `${updateArticles}/${editData.id}` : addArticles;
+    // try {
 
-      const res: any = editData?.id ? await axiosInstance.patch(url, formData): await axiosInstance.post(url, formData);
-      if (res?.code === 200) {
-        console.log(res);
-        message.open({
-          type: "success",
-          content: editData?.id ?"Article Edit Successfully":"Article Added Successfully",
-        });
-        submitData();
-        reset();
-        handleCancel();
-      } else {
-        message.open({
-          type: "error",
-          content: "Something went wrong",
-        });
-      }
-    } catch (error: any) {
-      console.log("error", error);
-      message.error(error?.response?.data?.message)
-    }
+    //   const res: any = editData?.id ? await axiosInstance.patch(url, formData): await axiosInstance.post(url, formData);
+    //   if (res?.code === 200) {
+    //     console.log(res);
+    //     message.open({
+    //       type: "success",
+    //       content: editData?.id ?"Article Edit Successfully":"Article Added Successfully",
+    //     });
+    //     submitData();
+    //     reset();
+    //     handleCancel();
+    //   } else {
+    //     message.open({
+    //       type: "error",
+    //       content: "Something went wrong",
+    //     });
+    //   }
+    // } catch (error: any) {
+    //   console.log("error", error);
+    //   message.error(error?.response?.data?.message)
+    // }
   };
  const Address=()=>(
      <Row gutter={[20, 20]} className="my-4">

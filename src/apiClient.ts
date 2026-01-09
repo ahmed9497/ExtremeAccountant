@@ -12,17 +12,21 @@ interface FailedRequests {
   config: AxiosRequestConfig;
   error: AxiosError;
 }
-const handleResponse = (response: any): AxiosResponse<any, any> => {
+const handleResponse = (response: any): any => {
   // Process the response
   hideLoader();
 
-  response.data = {
-    code: response.data.code,
-    data: response.data.data,
-    // msg: response.data.msg
-  };
+  // response.data = {
+  //   code: response.data.code,
+  //   data: response.data.data,
+  //   // msg: response.data.msg
+  // };
+  const res ={
+    statusCode:response.status,
+    ...response.data
+  }
 
-  return response.data;
+  return res;
 };
 let failedRequests: FailedRequests[] = [];
 let isTokenRefreshing = false;

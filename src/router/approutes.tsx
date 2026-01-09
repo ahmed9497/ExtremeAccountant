@@ -59,6 +59,8 @@ import AddBundleProduct from "@pages/inventory/AddBundleProduct";
 import StockAdjustment from "@pages/purchases/StockAdjustment";
 import OutAdjustment from "@pages/inventory/OutAdjustment";
 import InAdjustment from "@pages/inventory/InAdjustment";
+import Companies from "@pages/companies";
+import Dashboard from "@pages/Dashboard";
 
 const AppRoutes = () => {
   return (
@@ -104,40 +106,49 @@ const AppRoutes = () => {
         </Route>
         <Route path="purchases" element={<Purchases />}>
           <Route path="bills" element={<Bills />} />
-          <Route path="expense-bill" element={<ExpenseBill/>} />
-          <Route path="credit-note" element={<AddCreditNote/>} />
-          <Route path="batch-bill" element={<BatchBills/>} />
-          <Route path="payments" element={<Payments/>} />
-          <Route path="supplier-payment" element={<AddSupplierPayment/>} />
-          <Route path="credit-payment" element={<AddCreditPaymentPurchase/>} />
-          <Route path="manage-payment" element={<ManageReturnPayment/>} />
-          <Route path="batch-supplier-payment" element={<BatchSupplierPayment/>} />
-          <Route path="batch-credit-payment" element={<BatchCreditPaymentPurchase/>} />
+          <Route path="expense-bill" element={<ExpenseBill />} />
+          <Route path="credit-note" element={<AddCreditNote />} />
+          <Route path="batch-bill" element={<BatchBills />} />
+          <Route path="payments" element={<Payments />} />
+          <Route path="supplier-payment" element={<AddSupplierPayment />} />
+          <Route path="credit-payment" element={<AddCreditPaymentPurchase />} />
+          <Route path="manage-payment" element={<ManageReturnPayment />} />
+          <Route
+            path="batch-supplier-payment"
+            element={<BatchSupplierPayment />}
+          />
+          <Route
+            path="batch-credit-payment"
+            element={<BatchCreditPaymentPurchase />}
+          />
           <Route path="pdcr" element={<PurchasePDCR />} />
           <Route path="add-pdcr" element={<AddPurchasePDCR />} />
-          <Route path="post-dated-cheques" element={<PurchasePostDatedCheques />} />
+          <Route
+            path="post-dated-cheques"
+            element={<PurchasePostDatedCheques />}
+          />
           <Route path="all" element={<AllPurchases />} />
           <Route path="order" element={<PurchaseOrders />} />
           <Route path="add-po" element={<AddPO />} />
           <Route path="suppliers" element={<Suppliers />} />
           <Route path="supplier-open-Bal" element={<SupplierOpenBal />} />
-
         </Route>
-        <Route path="inventory" element={<Inventory/>} >
-         <Route path="products" element={<Products />} />
-         <Route path="product/non-stock" element={<AddNonStockProduct />} />
-         <Route path="product/stock" element={<AddStockProduct />} />
-         <Route path="product/bundle" element={<AddBundleProduct />} />
-         <Route path="stock-adjustment" element={<StockAdjustment />} />
-         <Route path="out-adjustment" element={<OutAdjustment />} />
-         <Route path="in-adjustment" element={<InAdjustment />} />
+        <Route path="inventory" element={<Inventory />}>
+          <Route path="products" element={<Products />} />
+          <Route path="product/non-stock" element={<AddNonStockProduct />} />
+          <Route path="product/stock" element={<AddStockProduct />} />
+          <Route path="product/bundle" element={<AddBundleProduct />} />
+          <Route path="stock-adjustment" element={<StockAdjustment />} />
+          <Route path="out-adjustment" element={<OutAdjustment />} />
+          <Route path="in-adjustment" element={<InAdjustment />} />
         </Route>
         <Route path="payments" element={<></>} />
         <Route path="analytics" element={<></>} />
         <Route path="banners" element={<></>} />
         <Route path="subscriptions" element={<></>} />
-        <Route path="overview" element={<>Overview Dashboard</>} />
+        <Route path="overview" element={<Dashboard/>} />
       </Route>
+      <Route path="/companies" element={<Companies />} />
     </Routes>
   );
 };

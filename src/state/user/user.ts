@@ -1,16 +1,18 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface UserState {
+  token: any;
   user: any;
 }
-let user: any = {};
-const data = localStorage.getItem("user");
-if (data) {
-  user = JSON.parse(data);
-}
+
+const storedUser = localStorage.getItem("user");
+const storedToken = localStorage.getItem("access_token");
+
+
 
 const initialState: UserState = {
-  user: name,
+  user: storedUser ? JSON.parse(storedUser) : null,
+  token: storedToken || "",
 };
 
 const userSlice = createSlice({
@@ -19,11 +21,13 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<any>) => {
       console.log(action);
-      state.user = action.payload;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
     setUserLogout: (state, action: PayloadAction<string>) => {
       console.log(action,"action")
       state.user = {};
+      state.token = "";
       localStorage.clear();
     },
   },
